@@ -1,0 +1,5 @@
+
+enum Action {
+  loadMaxItem,
+  loadNextPage,
+}
