@@ -26,19 +26,24 @@ class _ItemPageState extends State<ItemPage> {
     Store.shared.dispatch(Action.loadMaxItem);
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _onStateChanged() {
-    // network error
+  void _onStateChanged([String error]) {
     if (Store.shared.maxItemCount == 0) {
       Store.shared.dispatch(Action.loadMaxItem);
-    } else if (_items.isEmpty) {
-      Store.shared.dispatch(Action.loadNextPage, filter: this.filter);
-    } else {
+    }
 
+    if (error != null) {
+      
+    } else {
+      if (_items.isEmpty) {
+        Store.shared.dispatch(Action.loadNextPage, filter: this.filter);
+      } else {
+        final newItems = Store.shared.getItems(this.filter);
+        if (newItems.length != _items.length) {
+          setState(() {
+            _items = newItems;
+          });
+        }
+      }
     }
   }
 

@@ -11,7 +11,7 @@ enum Filter {
   all,
   news,
   ask,
-  show,
+  shows,
   jobs
 }
 
