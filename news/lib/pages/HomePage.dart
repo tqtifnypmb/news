@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     ItemPage(filter: Filter.ask),
 
-    ItemPage(filter: Filter.show),
+    ItemPage(filter: Filter.shows),
 
     ItemPage(filter: Filter.jobs)
   ];
