@@ -3,6 +3,7 @@ import 'package:news/redux/state.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 
 typedef void StoreListener([String error]);
 
@@ -82,15 +83,16 @@ class Store {
     }
 
     try {
-      final resp = await http.get('https://hacker-news.firebaseio.com/v0/maxitem.json?print=pretty').timeout(Duration(seconds: 5));
+      final resp = await http.get('https://hacker-news.firebaseio.com/v0/maxitem.json').timeout(Duration(seconds: 5));
+      print(resp.body.toString());
       if (resp.statusCode == 200) {
         maxItemCount = json.decode(resp.body);
+        print(maxItemCount);
         _notifyListeners();
       } else {
         _notifyListeners(resp.toString());
       }
     } catch (exp) {
-      maxItemCount = json.decode('19793625');
       _notifyListeners(exp.toString());
     }
   }
@@ -110,7 +112,7 @@ class Store {
       _loadItemList(filter: filter, itemIDs: itemIDs);
     } else {
       final storiesList = _storiesList[filter];
-      if (storiesList.isEmpty) {
+      if (storiesList == null || storiesList.isEmpty) {
         return;
       }
 
@@ -155,6 +157,7 @@ class Store {
           return;
         }
 
+        debugPrint(resp.body.toString());
         final itemJson = json.decode(resp.body);
         final item = Item.fromJson(itemJson);
         items.add(item);

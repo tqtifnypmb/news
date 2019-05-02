@@ -27,12 +27,12 @@ class _ItemPageState extends State<ItemPage> {
   }
 
   void _onStateChanged([String error]) {
-    if (Store.shared.maxItemCount == 0) {
-      Store.shared.dispatch(Action.loadMaxItem);
-    }
+    // if (Store.shared.maxItemCount == 0) {
+    //   Store.shared.dispatch(Action.loadMaxItem);
+    // }
 
     if (error != null) {
-      
+      debugPrint('Store Error: $error');
     } else {
       if (_items.isEmpty) {
         Store.shared.dispatch(Action.loadNextPage, filter: this.filter);
